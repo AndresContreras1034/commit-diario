@@ -2,7 +2,8 @@ name: Commit Diario
 
 on:
   schedule:
-    - cron: '0 12 * * *'  # Todos los días a las 12:00 UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch:
 
 jobs:
   auto-commit:
@@ -23,4 +24,3 @@ jobs:
           git add .
           git commit -m "Commit automático: $(date)" || echo "Nada que commitear"
           git push
-
