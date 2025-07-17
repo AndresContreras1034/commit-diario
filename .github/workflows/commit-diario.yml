@@ -2,27 +2,31 @@ name: Commit Diario
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 13 * * *'  # Se ejecuta todos los días a las 8:00 AM Colombia (13 UTC)
   workflow_dispatch:
 
 jobs:
-  auto-commit:
+  commit-diario:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repo
+      - name: Clonar el repositorio
         uses: actions/checkout@v4
         with:
+          ref: main
           token: ${{ secrets.PIT }}
 
-      - name: Modificar archivo
+      - name: Configurar nombre y correo del autor del commit
+        run: |
+          git config user.name "AndresContreras1034"
+          git config user.email "contrerandres001@gmail.com"
+
+      - name: Actualizar archivo de última actualización
         run: |
           echo "Última actualización: $(date)" > ultima_actualizacion.txt
 
-      - name: Hacer commit y push
+      - name: Confirmar y hacer commit
         run: |
-          git config user.name "andresbot"
-          git config user.email "andres@example.com"
-          git add .
-          git commit -m "Commit automático: $(date)" || echo "Nada que commitear"
+          git add ultima_actualizacion.txt
+          git commit -m "🌞 Commit diario automático - $(date +'%Y-%m-%d')"
           git push
