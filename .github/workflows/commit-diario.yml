@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Clonar repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Modificar archivo
         run: |
