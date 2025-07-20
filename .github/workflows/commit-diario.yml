@@ -4,10 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'   # 00:00 UTC (7:00 PM 
     - cron: '0 4 * * *'   # 04:00 UTC (11:00 PM COL)
-    - cron: '0 8 * * *'   # 08:00 UTC (3:00 AM COL)
-    - cron: '0 12 * * *'  # 12:00 UTC (7:00 AM COL)
-    - cron: '0 16 * * *'  # 16:00 UTC (11:00 AM COL)
-    - cron: '0 20 * * *'  # 20:00 UTC (3:00 PM COL)
+
   workflow_dispatch:
 
 jobs:
