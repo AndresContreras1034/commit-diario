@@ -33,7 +33,8 @@ jobs:
       - name: Confirmar y hacer commit
         run: |
           git add ultima_actualizacion.txt
-          git commit -m "⏰ Commit automático - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || echo "No hay cambios para commitear"
+          git diff --cached --quiet || git commit -m "⏰ Commit automático - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push origin HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
