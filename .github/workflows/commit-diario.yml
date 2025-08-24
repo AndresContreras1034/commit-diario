@@ -2,8 +2,8 @@ name: Commit Diario
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-    - cron: '0 4 * * *'
+    - cron: '0 0 * * *'   # 00:00 UTC (7:00 PM COL)
+    - cron: '0 4 * * *'   # 04:00 UTC (11:00 PM COL)
   workflow_dispatch:
 
 jobs:
@@ -11,23 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar el repositorio
+      # Clonar el repositorio
+      - name: Clonar repositorio
         uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.PIT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Configurar autor del commit
       - name: Configurar nombre y correo del autor del commit
         run: |
           git config user.name "AndresContreras1034"
           git config user.email "contrerandres001@gmail.com"
 
+      # Actualizar archivo
       - name: Actualizar archivo de última actualización
         run: |
           echo "Última actualización: $(date -u)" > ultima_actualizacion.txt
 
+      # Commit y push
       - name: Confirmar y hacer commit
         run: |
           git add ultima_actualizacion.txt
           git commit -m "⏰ Commit automático - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || echo "No hay cambios para commitear"
-          git push https://x-access-token:${{ secrets.PIT }}@github.com/AndresContreras1034/TU_REPO.git
+          git push origin HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
